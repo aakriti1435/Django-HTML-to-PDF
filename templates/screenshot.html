@@ -1,0 +1,70 @@
+{% load crispy_forms_tags %} {% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Screenshot!</title>
+
+    {# html2canvas #}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+    {# jSignature #}
+    <!-- <script type="text/javascript" src="/static/js/jSignature.min.js"></script> -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jSignature/2.1.3/jSignature.min.js"></script>
+
+    <!-- <script type="text/javascript" src="/static/js/django_jsignature.js"></script> <div id="div_id_signature" class="form-group"> -->
+
+    {# jQuery #}
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    {# bootstrap #}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1 class="text-center">My Test Webpage</h1>
+                <hr>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        A wild panel
+                    </div>
+                    <div class="panel-body">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt cupiditate, debitis soluta nobis doloribus nam, vero nisi. Vitae rerum dolores debitis quo voluptatem! Sit quasi voluptatibus ut, cupiditate laudantium eos.
+                    </div>
+                    <div class="row">
+                        {% crispy form %}
+                    </div>
+                </div>
+                <!-- <img align="center" src="{% static 'images/screenshot.jpg' %}" alt="img" width="300px" height="300px"> -->
+                <iframe src="http://facemaker.uvrg.org/" style="height:600px;width:1200px;"></iframe>
+                <button type="button" id="submit" class="btn btn-primary">Save Screenshot</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $('#submit').click(function() {
+            html2canvas(document.body, {
+                onrendered: function(canvas) {
+                    // toDataURL defaults to png, so we need to request a jpeg
+                    image_data = canvas.toDataURL('image/jpeg');
+
+                    $('#id_image_data').val(image_data);
+                    $('#agreement_form').submit();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
